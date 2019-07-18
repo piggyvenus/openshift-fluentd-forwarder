@@ -1,5 +1,5 @@
 # start based on a centos image
-FROM rhel7:7-released
+FROM rhel7
 
 ENV HOME=/opt/app-root/src \
   PATH=/opt/rh/rh-ruby22/root/usr/bin:/opt/app-root/src/bin:/opt/app-root/bin${PATH:+:${PATH}} \
@@ -8,7 +8,7 @@ ENV HOME=/opt/app-root/src \
   PKG_CONFIG_PATH=/opt/rh/rh-ruby22/root/usr/lib64/pkgconfig${PKG_CONFIG_PATH:+:${PKG_CONFIG_PATH}} \
   XDG_DATA_DIRS=/opt/rh/rh-ruby22/root/usr/share${XDG_DATA_DIRS:+:${XDG_DATA_DIRS}} \
   RUBY_VERSION=2.2 \
-  FLUENTD_VERSION=0.12.43 \
+  FLUENTD_VERSION=0.12.32 \
   GEM_HOME=/opt/app-root/src \
   DATA_VERSION=1.6.0 \
   TARGET_TYPE=remote_syslog \
@@ -32,10 +32,6 @@ LABEL io.k8s.description="Fluentd container for collecting logs from other fluen
 # add files
 ADD run.sh fluentd.conf.template passwd.template fluentd-check.sh ${HOME}/
 ADD common-*.sh /tmp/
-
-RUN yum install -y epel-release && \
-    yum update -y && \
-    yum install -y nss_wrapper
 
 # set permissions on files
 RUN chmod g+rx ${HOME}/fluentd-check.sh && \
