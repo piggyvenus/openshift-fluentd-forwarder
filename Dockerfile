@@ -33,6 +33,11 @@ LABEL io.k8s.description="Fluentd container for collecting logs from other fluen
 ADD run.sh fluentd.conf.template passwd.template fluentd-check.sh ${HOME}/
 ADD common-*.sh /tmp/
 
+RUN yum install -y epel-release && \
+    yum update -y && \
+    yum install -y nss_wrapper gettext && \
+    yum clean all -y
+
 # set permissions on files
 RUN chmod g+rx ${HOME}/fluentd-check.sh && \
     chmod +x /tmp/common-*.sh
