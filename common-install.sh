@@ -31,9 +31,9 @@ if [[ $RELEASE =~ $CENTOS_MATCH && -z "$USE_SYSTEM_REPOS" ]]; then
   rpmkeys --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
   yum install -y epel-release centos-release-scl-rh
 fi
-
 # ensure latest versions
 yum update $YUM_ARGS -y
+yum install -y nss_wrapper gettext
 
 # install all required packages
 yum install -y $YUM_ARGS $PACKAGES
